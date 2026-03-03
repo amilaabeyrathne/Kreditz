@@ -21,14 +21,6 @@ namespace KreditzBankData.IngestionService.Services
             _env = env;
         }
 
-        private string ResolvePath(string relativePath)
-        {
-            string basePath = string.IsNullOrEmpty(_options.FilesBasePath)
-                ? _env.ContentRootPath
-                : _options.FilesBasePath;
-            return Path.GetFullPath(Path.Combine(basePath, relativePath));
-        }
-
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("File watcher started. Polling {Folder} every {Seconds}s",
@@ -41,10 +33,6 @@ namespace KreditzBankData.IngestionService.Services
                 try
                 {
                     await ScanArrivedFolderAsync(stoppingToken);
-                }
-                catch (OperationCanceledException)
-                {
-                    break;
                 }
                 catch (Exception ex)
                 {
@@ -63,7 +51,7 @@ namespace KreditzBankData.IngestionService.Services
 
             if (!Directory.Exists(path))
             {
-                _logger.LogDebug("Arrived folder does not exist: {Path}", path);
+                _logger.LogInformation("Arrived folder does not exist: {Path}", path);
                 return;
             }
 
@@ -74,14 +62,21 @@ namespace KreditzBankData.IngestionService.Services
                 return;
             }
 
-            _logger.LogInformation("Found {Count} file(s) in Arrived folder", files.Length);
             foreach (string file in files)
             {
-                _logger.LogDebug("  {File}", Path.GetFileName(file));
+                _logger.LogInformation("  {File}", Path.GetFileName(file));
                 // TODO: process file via IFileParserService / orchestrator
             }
 
             await Task.CompletedTask;
+        }
+
+        private string ResolvePath(string relativePath)
+        {
+            string basePath = string.IsNullOrEmpty(_options.FilesBasePath)
+                ? _env.ContentRootPath
+                : _options.FilesBasePath;
+            return Path.GetFullPath(Path.Combine(basePath, relativePath));
         }
     }
 }
