@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "KreditzBankData.IngestionService": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

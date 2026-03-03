@@ -10,6 +10,7 @@ obj/
 # Environment / secrets
 .env
 appsettings.Local.json
+appsettings.Development.json
 
 # OS
 Thumbs.db
