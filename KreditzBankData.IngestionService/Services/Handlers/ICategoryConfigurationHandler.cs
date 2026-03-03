@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KreditzBankData.IngestionService.Services
+namespace KreditzBankData.IngestionService.Services.Handlers
 {
-    public class JsonFileParserService : IFileParserService
+    public interface ICategoryConfigurationHandler
     {
     }
 }
