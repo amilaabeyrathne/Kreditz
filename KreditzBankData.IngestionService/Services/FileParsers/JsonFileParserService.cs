@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KreditzBankData.IngestionService.Options;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace KreditzBankData.IngestionService.Services.FileParsers
 {
-    public class JsonFileParserService : IFileParserService
+    public class JsonFileParserService : FileParserService
     {
+        public JsonFileParserService(
+            ILogger<FileParserService> logger,
+            IOptions<IngestionOptions> options,
+            IHostEnvironment env)
+            : base(logger, options, env)
+        {
+        }
     }
 }
